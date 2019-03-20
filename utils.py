@@ -49,7 +49,7 @@ def performVad(filePath, chunkFolderPath):
         print('Creating chunk folder at: '+chunkFolderPath)
         os.makedirs(chunkFolderPath)
     aggressiveness = 2
-    min_chunk_length = 4.0
+    min_chunk_length = 3.0
     max_chunk_length = 5.0
     directory = os.fsencode(chunkFolderPath)
     fileName = os.path.basename(filePath).replace('.wav','')
@@ -73,25 +73,25 @@ def performVad(filePath, chunkFolderPath):
             if(chunk_from == chunk_to):
                 chunk_from = offset/len(audio)*audio_length
             chunk_to = (offset+n)/len(audio)*audio_length
-            #if(len(accumulatedFrames)>0):
-            #    if(chunk_to - chunk_from>max_chunk_length):
-            #        chunkFileName = chunkFolderPath+fileName+"{:03}".format(chunkCount)+'.wav'
-            #        write_wave(chunkFileName,accumulatedFrames,sample_rate)
-            #        chunkFilePaths.append(chunkFileName)
-            #        print('Creating chunk from: '+ str(chunk_from)  +'to: '+ str(chunk_to) +': '+ chunkFileName)
-            #        chunkCount = chunkCount + 1
-            #    accumulatedFrames = []
-            #    chunk_from = chunk_to
+            if(len(accumulatedFrames)>0):
+                if(chunk_to - chunk_from>max_chunk_length):
+                    chunkFileName = chunkFolderPath+fileName+"_{:03}".format(chunkCount)+'.wav'
+                    write_wave(chunkFileName,accumulatedFrames,sample_rate)
+                    chunkFilePaths.append(chunkFileName)
+                    print('Creating chunk from: '+ str(chunk_from)  +'to: '+ str(chunk_to) +': '+ chunkFileName)
+                    chunkCount = chunkCount + 1
+                    accumulatedFrames = []
+                    chunk_from = chunk_to
         else:
             if(len(accumulatedFrames)>0):
                 if(chunk_to - chunk_from>min_chunk_length):
-                    chunkFileName = chunkFolderPath+fileName+"{:03}".format(chunkCount)+'.wav'
+                    chunkFileName = chunkFolderPath+fileName+"_{:03}".format(chunkCount)+'.wav'
                     write_wave(chunkFileName,accumulatedFrames,sample_rate)
                     chunkFilePaths.append(chunkFileName)
                     print('Creating chunk from: '+ str(chunk_from)  +'to: '+ str(chunk_to) +': '+ chunkFileName)
                     chunkCount = chunkCount + 1
                 accumulatedFrames = []
                 chunk_from = chunk_to
-            timestamp += duration
-            offset += n
+        timestamp += duration
+        offset += n
     return chunkFilePaths
