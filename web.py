@@ -10,16 +10,16 @@ import time
 app = Flask(__name__)
 
 
-def init():
-    print("Init called -----``````~~~~~~")
-    global embed,g,session,messages,output
-    module_url = "https://tfhub.dev/google/universal-sentence-encoder-large/3" 
-    embed = hub.Module(module_url)
-    g = tf.get_default_graph()
-    session = tf.Session(graph=g)
-    session.run([tf.global_variables_initializer(), tf.tables_initializer()])   
-    messages = tf.placeholder(dtype=tf.string, shape=[None])
-    output = embed(messages)
+#def init():
+print("Init called -----``````~~~~~~")
+global embed,g,session,messages,output
+module_url = "https://tfhub.dev/google/universal-sentence-encoder-large/3" 
+embed = hub.Module(module_url)
+g = tf.get_default_graph()
+session = tf.Session(graph=g)
+session.run([tf.global_variables_initializer(), tf.tables_initializer()])   
+messages = tf.placeholder(dtype=tf.string, shape=[None])
+output = embed(messages)
 
 @app.route("/", methods=['GET', 'POST'])
 def hello():
@@ -39,5 +39,5 @@ def hello():
     return jsonify(sentence1=sentence1, sentence2=sentence2, similarityScore=str(similarity12))
     
 if __name__ == '__main__':
-    init()
-    app.run(debug=True, threaded=True) 
+#    init()
+    app.run(debug=True, threaded=True, host='0.0.0.0', port='5010') 
