@@ -4,7 +4,7 @@ import pandas as pd
 import librosa
 import glob
 import numpy as np
-import utils as utils
+#import utils as utils
 
 json_file = open('models/model.json', 'r')
 loaded_model_json = json_file.read()
@@ -79,13 +79,13 @@ def getEmotionTypeFromFileName(item):
     return expected
 
 if __name__ == "__main__":
-    folderPath = '/home/absin/git/sematicSimilarity/RawData'
-    chunkFolderPath='/home/absin/git/sematicSimilarity/audio/chunks/'
+    folderPath = '/home/absin/git/sentenceSimilarity/speech/RawData'
+    chunkFolderPath='/home/absin/git/sentenceSimilarity/speech/audio/chunks/'
     #filePath='/home/absin/git/sematicSimilarity/audio/17895363_right.wav'
     #doPerformVad = True
     totalCount = 0
     successCount = 0
-    folderPath='/home/absin/git/sematicSimilarity/RawData/'
+    folderPath='/home/absin/git/sentenceSimilarity/speech/RawData/'
     doPerformVad = False
     for f in os.listdir(folderPath):
         try:
