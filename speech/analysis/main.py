@@ -12,7 +12,7 @@ import pdb
 import jsonpickle
 from emotion import emotion_api
 
-def transcribe_emotion(task_id, language, model):
+def transcribe_emotion(task_id, language, model, loaded_model):
     task_folder = '/home/absin/git/sentenceSimilarity/speech/audio/tasks/'
     task_file_path = misc.download_file(
         'https://storage.googleapis.com/istar-static/'+task_id+'.wav', task_folder)
@@ -51,8 +51,8 @@ def transcribe_emotion(task_id, language, model):
     conversation_blocks.sort(key=lambda x: x.from_time, reverse=False)
     
     # Now the emotional bit
-    loaded_model = emotion_api.getModel()
-    loaded_model._make_predict_function()
+    #loaded_model = emotion_api.getModel()
+    #loaded_model._make_predict_function()
     snips = emotion_api.emotion(channel_files, loaded_model, task_folder, task_id)
     # empty chunks foilder
     shutil.rmtree(task_folder + task_id, ignore_errors=True)
@@ -67,6 +67,22 @@ def transcribe_emotion(task_id, language, model):
 						+ str(emotion_snip.to_time) + " not found")
     print(jsonpickle.encode(conversation_blocks))
     return conversation_blocks
+
+def emotion(task_id, loaded_model):
+    task_folder = '/home/absin/git/sentenceSimilarity/speech/audio/tasks/'
+    task_file_path = misc.download_file(
+        'https://storage.googleapis.com/istar-static/'+task_id+'.wav', task_folder)
+    channel_files = [task_file_path]
+    # split multichannel to 2 files
+    with contextlib.closing(wave.open(task_file_path, 'rb')) as wf:
+        num_channels = wf.getnchannels()
+        if num_channels == 2:
+            channel_files = misc.split_stereo(task_file_path)
+    snips = emotion_api.emotion(channel_files, loaded_model, task_folder, task_id)
+    print(snips)
+    # empty chunks foilder
+    shutil.rmtree(task_folder + task_id, ignore_errors=True)
+    return snips
 
 if __name__ == '__main__':
     task_id = '17906567'
