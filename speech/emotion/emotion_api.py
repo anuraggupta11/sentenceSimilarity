@@ -48,12 +48,16 @@ def emotion(channel_files, loaded_model, task_folder, task_id):
     return snips
 
 
-def getModel():
-    json_file = open(os.getcwd() + '/speech/emotion/models/model.json', 'r')
+def getModel(model_path="NA", weight_path = "NA"):
+    if model_path == "NA":
+        model_path = os.getcwd() + '/speech/emotion/models/model.json'
+    if weight_path == "NA":
+        weight_path = os.getcwd() + "/speech/emotion/models/Emotion_Voice_Detection_Model.h5"
+    json_file = open(model_path, 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
-    loaded_model.load_weights(os.getcwd() + "/speech/emotion/models/Emotion_Voice_Detection_Model.h5")
+    loaded_model.load_weights(weight_path)
     print("Loaded model and weights from disk")
     return loaded_model
 
@@ -76,3 +80,9 @@ def getEmotionPredictionChunk(f, loaded_model):
                                      verbose=1)
     livepreds1 = livepreds.argmax(axis=1)
     return labels[livepreds1[0]], str(livepreds[0][livepreds1[0]])
+
+if __name__ == '__main__':
+    loaded_model = getModel("/home/absin/Documents/dev/sentenceSimilarity/speech/emotion/models/model.json",
+    "/home/absin/Documents/dev/sentenceSimilarity/speech/emotion/models/Emotion_Voice_Detection_Model.h5")
+    loaded_model._make_predict_function()
+    print(getEmotionPredictionChunk('/home/absin/Downloads/output.wav',loaded_model))

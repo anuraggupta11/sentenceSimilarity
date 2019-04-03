@@ -50,3 +50,6 @@ WantedBy=multi-user.target
 systemctl start sentenceSimilarity.Service
 systemctl status sentenceSimilarity.Service
 systemctl stop sentenceSimilarity.Service
+
+# Some ffmpeg magic
+ffmpeg -i 17916689_002.wav -i 17916689_002.wav -filter_complex '[0:0][1:0]concat=n=2:v=0:a=1[out]' -map '[out]' output.wav

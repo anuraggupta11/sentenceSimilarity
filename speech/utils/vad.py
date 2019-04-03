@@ -90,3 +90,7 @@ def perform_vad(file_path, chunk_folder_path, min_chunk_length = 2.5, max_chunk_
         timestamp += duration
         offset += n
     return snippets
+
+
+if __name__=='__main__':
+        perform_vad('/home/absin/Downloads/17916689.wav', '/home/absin/Downloads/17916689/', 0.5, 3.0)

@@ -11,8 +11,14 @@ from transcription import google_transcribe
 import pdb
 import jsonpickle
 from emotion import emotion_api
+import requests
 
 def transcribe_emotion(task_id, language, model, loaded_model, do_emotion = True):
+    r = requests.get("http://db.talentify.in:5050/product?method=SIGNAL&taskId="+task_id)
+    data = json.loads(r.content)
+    phrases=[]
+    for item in data:
+    phrases.append(item['value'])
     task_folder = '/home/absin/git/sentenceSimilarity/speech/audio/tasks/'
     task_file_path = misc.download_file(
         'https://storage.googleapis.com/istar-static/'+task_id+'.wav', task_folder)
@@ -34,7 +40,7 @@ def transcribe_emotion(task_id, language, model, loaded_model, do_emotion = True
         speaker = 'Customer'
         if task_id + '_1' in snippet.path:
             speaker = 'Agent'
-        for response in google_transcribe.transcribe_streaming(snippet.path, language, model):
+        for response in google_transcribe.transcribe_streaming(snippet.path, language, model, phrases):
             for result in response.results:
                 alternatives = result.alternatives
                 for alternative in alternatives:

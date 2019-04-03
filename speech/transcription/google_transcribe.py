@@ -1,7 +1,7 @@
 import io
 
 # [START speech_transcribe_streaming]
-def transcribe_streaming(stream_file, language, model):
+def transcribe_streaming(stream_file, language, model, phrases):
     """Streams transcription of the given audio file."""
     from google.cloud import speech
     from google.cloud.speech import enums
@@ -27,14 +27,16 @@ def transcribe_streaming(stream_file, language, model):
         # A model must be specified to use enhanced model.
         model='video',
         enable_word_time_offsets=True,
-        enable_automatic_punctuation=True)
+        enable_automatic_punctuation=True,
+        speech_contexts=[speech.types.SpeechContext(phrases=phrases)])
     if not model:
         config = types.RecognitionConfig(
         encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=8000,
         language_code=language,
         enable_word_time_offsets=True,
-        enable_automatic_punctuation=True)
+        enable_automatic_punctuation=True,
+        speech_contexts=[speech.types.SpeechContext(phrases=phrases)])
     streaming_config = types.StreamingRecognitionConfig(config=config)
 
     # streaming_recognize returns a generator.
@@ -62,6 +64,3 @@ def transcribe_streaming(stream_file, language, model):
     #return responses
     # [END speech_python_migration_streaming_response]
 # [END speech_transcribe_streaming]
-
-
-
