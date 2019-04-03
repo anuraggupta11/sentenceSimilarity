@@ -39,7 +39,7 @@ def read_wave(path):
         duration = frames / sample_rate
         return pcm_data, sample_rate, duration
 
-def perform_vad(file_path, chunk_folder_path, min_chunk_length = 3.0, max_chunk_length = 5.0):
+def perform_vad(file_path, chunk_folder_path, min_chunk_length = 2.5, max_chunk_length = 3.0):
     snippets = []
     print('Processing '+ file_path+' for voice activity detection...')
     if os.path.isdir(chunk_folder_path) is False:

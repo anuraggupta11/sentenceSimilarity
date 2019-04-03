@@ -12,7 +12,7 @@ import pdb
 import jsonpickle
 from emotion import emotion_api
 
-def transcribe_emotion(task_id, language, model, loaded_model):
+def transcribe_emotion(task_id, language, model, loaded_model, do_emotion = True):
     task_folder = '/home/absin/git/sentenceSimilarity/speech/audio/tasks/'
     task_file_path = misc.download_file(
         'https://storage.googleapis.com/istar-static/'+task_id+'.wav', task_folder)
@@ -43,28 +43,29 @@ def transcribe_emotion(task_id, language, model, loaded_model):
                         word = word_info.word
                         start_time = word_info.start_time
                         end_time = word_info.end_time
-                        word = objects.ConversationBlock(snippet.from_time + word_info.start_time.seconds + word_info.start_time.nanos * 1e-9, 
+                        word = objects.ConversationBlock(snippet.from_time + word_info.start_time.seconds + word_info.start_time.nanos * 1e-9,
                             snippet.from_time + word_info.end_time.seconds + word_info.end_time.nanos * 1e-9, speaker, word, alternative.confidence)
                         conversation_block.add_word(word)
                 conversation_blocks.append(conversation_block)
         #break
     conversation_blocks.sort(key=lambda x: x.from_time, reverse=False)
-    
-    # Now the emotional bit
-    #loaded_model = emotion_api.getModel()
-    #loaded_model._make_predict_function()
-    snips = emotion_api.emotion(channel_files, loaded_model, task_folder, task_id)
-    # empty chunks foilder
-    shutil.rmtree(task_folder + task_id, ignore_errors=True)
-    for emotion_snip in snips:
-        emotion_snippet_located = False
-        for conv in conversation_blocks:
-            if conv.from_time <= emotion_snip.from_time and conv.to_time >= emotion_snip.to_time:
-                conv.add_signals(emotion_snip.signals)
-                emotion_snippet_located = True
-        if emotion_snippet_located is False:
-            print("Emotion snippet from " + str(emotion_snip.from_time) + " to: "
-						+ str(emotion_snip.to_time) + " not found")
+
+    if do_emotion:
+        # Now the emotional bit
+        #loaded_model = emotion_api.getModel()
+        #loaded_model._make_predict_function()
+        snips = emotion_api.emotion(channel_files, loaded_model, task_folder, task_id)
+        # empty chunks foilder
+        shutil.rmtree(task_folder + task_id, ignore_errors=True)
+        for emotion_snip in snips:
+            emotion_snippet_located = False
+            for conv in conversation_blocks:
+                if conv.from_time <= emotion_snip.from_time and conv.to_time >= emotion_snip.to_time:
+                    conv.add_signals(emotion_snip.signals)
+                    emotion_snippet_located = True
+            if emotion_snippet_located is False:
+                print("Emotion snippet from " + str(emotion_snip.from_time) + " to: "
+    						+ str(emotion_snip.to_time) + " not found")
     print(jsonpickle.encode(conversation_blocks))
     return conversation_blocks
 
@@ -89,6 +90,3 @@ if __name__ == '__main__':
     language = 'en-US'
     model = True
     transcribe_emotion(task_id, language, model)
-
-
-

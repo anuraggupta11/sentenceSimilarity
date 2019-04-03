@@ -16,6 +16,14 @@ def sentence_similarity():
     sentence2 = request.form['sentence2']
     return jsonify(sentence1=sentence1, sentence2=sentence2, similarityScore=str(sentence_similarity_api.ss(sentence1, sentence2)))
 
+@app.route("/transcibe", methods=['GET', 'POST'])
+def transcibe():
+    task_id = request.args['task_id']
+    language = request.args['language']
+    model = (request.args['model'] == 'True')
+    conversation_blocks = analysis_api.transcribe_emotion(task_id, language, model, loaded_model, False)
+    return jsonpickle.encode(conversation_blocks)
+
 @app.route("/transcibe_emotion", methods=['GET', 'POST'])
 def transcibe_emotion():
     task_id = request.args['task_id']

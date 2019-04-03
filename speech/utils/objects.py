@@ -17,6 +17,8 @@ class Snippet(object):
         self.signals.append(signal)
     def add_transcription(self, responses):
         self.responses = responses
+    def set_speaker(self, speaker):
+        self.speaker = speaker
 
 class ConversationBlock(object):
     """Represents a conversation block specific to a speaker, the base of the analysis object"""

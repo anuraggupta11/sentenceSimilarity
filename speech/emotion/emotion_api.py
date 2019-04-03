@@ -30,6 +30,7 @@ def emotion(channel_files, loaded_model, task_folder, task_id):
         predicted, score = getEmotionPredictionChunk(
             snippet.path, loaded_model)
         snippet.add_signal(objects.Signal(predicted, score))
+        snippet.set_speaker('Agent')
         if float(score) > 0.6:
             print('Agent: For time: ' + str(snippet.from_time) + ' to time: ' +
                   str(snippet.to_time) + ' Predicted label - > ' + predicted + ' with score -> ' + score + ' on file: ' + snippet.path)
@@ -37,6 +38,7 @@ def emotion(channel_files, loaded_model, task_folder, task_id):
         predicted, score = getEmotionPredictionChunk(
             snippet.path, loaded_model)
         snippet.add_signal(objects.Signal(predicted, score))
+        snippet.set_speaker('Customer')
         if float(score) > 0.6:
             print('Customer: For time: ' + str(snippet.from_time) + ' to time: ' +
                   str(snippet.to_time) + ' Predicted label - > ' + predicted + ' with score -> ' + score + ' on file: ' + snippet.path)

@@ -2,6 +2,7 @@
 python3 -V
 # should show >3.5.2
 sudo apt-get install python3-dev
+sudo apt-get install build-essential
 sudo apt-get install virtualenv
 virtualenv -p python3.6 venv
 source venv/bin/activate
