@@ -12,13 +12,14 @@ import pdb
 import jsonpickle
 from emotion import emotion_api
 import requests
+import json
 
 def transcribe_emotion(task_id, language, model, loaded_model, do_emotion = True):
-    r = requests.get("http://db.talentify.in:5050/product?method=SIGNAL&taskId="+task_id)
+    r = requests.get("http://db.talentify.in:3050/product?method=SIGNAL&taskId="+task_id)
     data = json.loads(r.content)
     phrases=[]
     for item in data:
-    phrases.append(item['value'])
+        phrases.append(item['value'])
     task_folder = '/home/absin/git/sentenceSimilarity/speech/audio/tasks/'
     task_file_path = misc.download_file(
         'https://storage.googleapis.com/istar-static/'+task_id+'.wav', task_folder)
@@ -36,7 +37,7 @@ def transcribe_emotion(task_id, language, model, loaded_model, do_emotion = True
     conversation_blocks = []
 
     for snippet in snippets:
-        print('Transcribing: ' + snippet.path)
+        #print('Transcribing: ' + snippet.path)
         speaker = 'Customer'
         if task_id + '_1' in snippet.path:
             speaker = 'Agent'
@@ -72,7 +73,7 @@ def transcribe_emotion(task_id, language, model, loaded_model, do_emotion = True
             if emotion_snippet_located is False:
                 print("Emotion snippet from " + str(emotion_snip.from_time) + " to: "
     						+ str(emotion_snip.to_time) + " not found")
-    print(jsonpickle.encode(conversation_blocks))
+    #print(jsonpickle.encode(conversation_blocks))
     return conversation_blocks
 
 def emotion(task_id, loaded_model):
@@ -86,7 +87,7 @@ def emotion(task_id, loaded_model):
         if num_channels == 2:
             channel_files = misc.split_stereo(task_file_path)
     snips = emotion_api.emotion(channel_files, loaded_model, task_folder, task_id)
-    print(snips)
+    #print(snips)
     # empty chunks foilder
     shutil.rmtree(task_folder + task_id, ignore_errors=True)
     return snips

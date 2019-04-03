@@ -1,0 +1,248 @@
+[2019-04-03 13:44:32 +0000] [12674] [INFO] Starting gunicorn 19.9.0
+[2019-04-03 13:44:32 +0000] [12674] [INFO] Listening at: http://0.0.0.0:5010 (12674)
+[2019-04-03 13:44:32 +0000] [12674] [INFO] Using worker: sync
+[2019-04-03 13:44:32 +0000] [12677] [INFO] Booting worker with pid: 12677
+[2019-04-03 13:44:33 +0000] [12678] [INFO] Booting worker with pid: 12678
+[2019-04-03 13:44:33 +0000] [12679] [INFO] Booting worker with pid: 12679
+[2019-04-03 13:44:33 +0000] [12682] [INFO] Booting worker with pid: 12682
+[2019-04-03 13:44:33 +0000] [12690] [INFO] Booting worker with pid: 12690
+[2019-04-03 13:44:33 +0000] [12692] [INFO] Booting worker with pid: 12692
+[2019-04-03 13:44:33 +0000] [12693] [INFO] Booting worker with pid: 12693
+[2019-04-03 13:44:33 +0000] [12697] [INFO] Booting worker with pid: 12697
+[2019-04-03 13:44:54 +0000] [12674] [INFO] Handling signal: int
+[2019-04-03 13:44:54 +0000] [12678] [INFO] Worker exiting (pid: 12678)
+[2019-04-03 13:44:54 +0000] [12693] [INFO] Worker exiting (pid: 12693)
+[2019-04-03 13:44:54 +0000] [12677] [INFO] Worker exiting (pid: 12677)
+[2019-04-03 13:44:55 +0000] [12682] [INFO] Worker exiting (pid: 12682)
+[2019-04-03 13:44:55 +0000] [12692] [INFO] Worker exiting (pid: 12692)
+[2019-04-03 13:44:55 +0000] [12697] [INFO] Worker exiting (pid: 12697)
+[2019-04-03 13:44:55 +0000] [12679] [INFO] Worker exiting (pid: 12679)
+[2019-04-03 13:44:55 +0000] [12690] [INFO] Worker exiting (pid: 12690)
+[2019-04-03 13:44:56 +0000] [12674] [INFO] Shutting down: Master
+[2019-04-03 13:45:25 +0000] [12753] [INFO] Starting gunicorn 19.9.0
+[2019-04-03 13:45:25 +0000] [12753] [INFO] Listening at: http://0.0.0.0:5010 (12753)
+[2019-04-03 13:45:25 +0000] [12753] [INFO] Using worker: sync
+[2019-04-03 13:45:25 +0000] [12756] [INFO] Booting worker with pid: 12756
+[2019-04-03 13:45:25 +0000] [12758] [INFO] Booting worker with pid: 12758
+[2019-04-03 13:45:25 +0000] [12759] [INFO] Booting worker with pid: 12759
+[2019-04-03 13:45:25 +0000] [12760] [INFO] Booting worker with pid: 12760
+[2019-04-03 13:45:25 +0000] [12764] [INFO] Booting worker with pid: 12764
+[2019-04-03 13:45:26 +0000] [12766] [INFO] Booting worker with pid: 12766
+[2019-04-03 13:45:26 +0000] [12767] [INFO] Booting worker with pid: 12767
+[2019-04-03 13:45:26 +0000] [12773] [INFO] Booting worker with pid: 12773
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:45:28.629161 140370043549504 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:45:29.239461 140370043549504 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:45:29.342184 140370043549504 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:45:29.512993 140370043549504 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:45:29.790660 140370043549504 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:45:29.824902 140370043549504 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:45:29.810466 140370043549504 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:45:29.842977 140370043549504 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+[2019-04-03 13:45:45 +0000] [12753] [INFO] Handling signal: int
+[2019-04-03 13:45:45 +0000] [12773] [INFO] Worker exiting (pid: 12773)
+[2019-04-03 13:45:45 +0000] [12759] [INFO] Worker exiting (pid: 12759)
+[2019-04-03 13:45:45 +0000] [12766] [INFO] Worker exiting (pid: 12766)
+[2019-04-03 13:45:45 +0000] [12756] [INFO] Worker exiting (pid: 12756)
+[2019-04-03 13:45:45 +0000] [12767] [INFO] Worker exiting (pid: 12767)
+[2019-04-03 13:45:45 +0000] [12764] [INFO] Worker exiting (pid: 12764)
+[2019-04-03 13:45:45 +0000] [12758] [INFO] Worker exiting (pid: 12758)
+[2019-04-03 13:45:45 +0000] [12760] [INFO] Worker exiting (pid: 12760)
+[2019-04-03 13:45:45 +0000] [12753] [INFO] Shutting down: Master
+[2019-04-03 13:46:33 +0000] [12821] [INFO] Starting gunicorn 19.9.0
+[2019-04-03 13:46:33 +0000] [12821] [INFO] Listening at: http://0.0.0.0:5010 (12821)
+[2019-04-03 13:46:33 +0000] [12821] [INFO] Using worker: sync
+[2019-04-03 13:46:33 +0000] [12824] [INFO] Booting worker with pid: 12824
+[2019-04-03 13:46:33 +0000] [12825] [INFO] Booting worker with pid: 12825
+[2019-04-03 13:46:33 +0000] [12830] [INFO] Booting worker with pid: 12830
+[2019-04-03 13:46:34 +0000] [12832] [INFO] Booting worker with pid: 12832
+[2019-04-03 13:46:34 +0000] [12837] [INFO] Booting worker with pid: 12837
+[2019-04-03 13:46:34 +0000] [12838] [INFO] Booting worker with pid: 12838
+[2019-04-03 13:46:34 +0000] [12842] [INFO] Booting worker with pid: 12842
+[2019-04-03 13:46:34 +0000] [12844] [INFO] Booting worker with pid: 12844
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:46:37.228956 140340447598400 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:46:37.286913 140340447598400 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:46:37.342392 140340447598400 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:46:37.510842 140340447598400 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:46:37.674567 140340447598400 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:46:37.717342 140340447598400 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:46:37.846346 140340447598400 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:46:37.866397 140340447598400 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Using TensorFlow backend.
+Started: 17916661
+Downloading file 17916661.wav ... to /home/absin/git/sentenceSimilarity/speech/audio/tasks/
+Started: 17916661
+Downloading file 17916661.wav ... to /home/absin/git/sentenceSimilarity/speech/audio/tasks/
+Started: 17906563
+Downloading file 17906563.wav ... to /home/absin/git/sentenceSimilarity/speech/audio/tasks/
+Finished: 17906563
+Started: 17906563
+Downloading file 17906563.wav ... to /home/absin/git/sentenceSimilarity/speech/audio/tasks/
+Finished: 17906563
+Finished: 17916661
+[2019-04-03 13:48:30 +0000] [12844] [INFO] Parent changed, shutting down: <Worker 12844>
+[2019-04-03 13:48:30 +0000] [12844] [INFO] Worker exiting (pid: 12844)
+Finished: 17916661
+[2019-04-03 13:48:31 +0000] [12838] [INFO] Parent changed, shutting down: <Worker 12838>
+[2019-04-03 13:48:31 +0000] [12838] [INFO] Worker exiting (pid: 12838)
+[2019-04-03 13:50:43 +0000] [13638] [INFO] Starting gunicorn 19.9.0
+[2019-04-03 13:50:43 +0000] [13638] [INFO] Listening at: http://0.0.0.0:5010 (13638)
+[2019-04-03 13:50:43 +0000] [13638] [INFO] Using worker: sync
+[2019-04-03 13:50:43 +0000] [13654] [INFO] Booting worker with pid: 13654
+[2019-04-03 13:50:43 +0000] [13655] [INFO] Booting worker with pid: 13655
+[2019-04-03 13:50:43 +0000] [13656] [INFO] Booting worker with pid: 13656
+[2019-04-03 13:50:43 +0000] [13663] [INFO] Booting worker with pid: 13663
+[2019-04-03 13:50:43 +0000] [13667] [INFO] Booting worker with pid: 13667
+[2019-04-03 13:50:43 +0000] [13671] [INFO] Booting worker with pid: 13671
+[2019-04-03 13:50:43 +0000] [13672] [INFO] Booting worker with pid: 13672
+[2019-04-03 13:50:44 +0000] [13673] [INFO] Booting worker with pid: 13673
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:50:46.204689 140127236441920 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:50:47.037028 140127236441920 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:50:47.133494 140127236441920 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:50:47.438652 140127236441920 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:50:47.631669 140127236441920 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:50:47.870307 140127236441920 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:50:47.946281 140127236441920 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:50:48.062182 140127236441920 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+Using TensorFlow backend.
+E0403 13:50:58.526417 140127236441920 app.py:1761] Exception on /transcibe [GET]
+Traceback (most recent call last):
+  File "/root/sentenceSimilarity/venv/lib/python3.6/site-packages/google/api_core/grpc_helpers.py", line 79, in next
+    return six.next(self._wrapped)
+  File "/root/sentenceSimilarity/venv/lib/python3.6/site-packages/grpc/_channel.py", line 363, in __next__
+    return self._next()
+  File "/root/sentenceSimilarity/venv/lib/python3.6/site-packages/grpc/_channel.py", line 357, in _next
+    raise self
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.PERMISSION_DENIED
+	details = "Request had insufficient authentication scopes."
+	debug_error_string = "{"created":"@1554299458.525498777","description":"Error received from peer","file":"src/core/lib/surface/call.cc","file_line":1039,"grpc_message":"Request had insufficient authentication scopes.","grpc_status":7}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/sentenceSimilarity/venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/root/sentenceSimilarity/venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/root/sentenceSimilarity/venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/root/sentenceSimilarity/venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/root/sentenceSimilarity/venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/root/sentenceSimilarity/venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/root/sentenceSimilarity/web.py", line 26, in transcibe
+    conversation_blocks = analysis_api.transcribe_emotion(task_id, language, model, loaded_model, False)
+  File "/root/sentenceSimilarity/speech/analysis/main.py", line 44, in transcribe_emotion
+    for response in google_transcribe.transcribe_streaming(snippet.path, language, model, phrases):
+  File "/root/sentenceSimilarity/venv/lib/python3.6/site-packages/google/api_core/grpc_helpers.py", line 81, in next
+    six.raise_from(exceptions.from_grpc_error(exc), exc)
+  File "<string>", line 3, in raise_from
+google.api_core.exceptions.PermissionDenied: 403 Request had insufficient authentication scopes.
+[2019-04-03 13:51:24 +0000] [13638] [INFO] Handling signal: term
+[2019-04-03 13:51:24 +0000] [13656] [INFO] Worker exiting (pid: 13656)
+[2019-04-03 13:51:24 +0000] [13673] [INFO] Worker exiting (pid: 13673)
+Using TensorFlow backend.
+Using TensorFlow backend.
+[2019-04-03 13:51:24 +0000] [13654] [INFO] Worker exiting (pid: 13654)
+Using TensorFlow backend.
+[2019-04-03 13:51:24 +0000] [13667] [INFO] Worker exiting (pid: 13667)
+Using TensorFlow backend.
+[2019-04-03 13:51:24 +0000] [13671] [INFO] Worker exiting (pid: 13671)
+Using TensorFlow backend.
+[2019-04-03 13:51:24 +0000] [13655] [INFO] Worker exiting (pid: 13655)
+Started: 17906563
+Downloading file 17906563.wav ... to /home/absin/git/sentenceSimilarity/speech/audio/tasks/
+[2019-04-03 13:51:24 +0000] [13663] [INFO] Worker exiting (pid: 13663)
+Using TensorFlow backend.
+[2019-04-03 13:51:54 +0000] [13638] [INFO] Shutting down: Master
+[2019-04-03 13:54:37 +0000] [13850] [INFO] Starting gunicorn 19.9.0
+[2019-04-03 13:54:37 +0000] [13850] [INFO] Listening at: http://0.0.0.0:5010 (13850)
+[2019-04-03 13:54:37 +0000] [13850] [INFO] Using worker: sync
+[2019-04-03 13:54:37 +0000] [13866] [INFO] Booting worker with pid: 13866
+[2019-04-03 13:54:37 +0000] [13867] [INFO] Booting worker with pid: 13867
+[2019-04-03 13:54:37 +0000] [13869] [INFO] Booting worker with pid: 13869
+[2019-04-03 13:54:37 +0000] [13877] [INFO] Booting worker with pid: 13877
+[2019-04-03 13:54:37 +0000] [13878] [INFO] Booting worker with pid: 13878
+[2019-04-03 13:54:37 +0000] [13880] [INFO] Booting worker with pid: 13880
+[2019-04-03 13:54:37 +0000] [13881] [INFO] Booting worker with pid: 13881
+[2019-04-03 13:54:37 +0000] [13886] [INFO] Booting worker with pid: 13886
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:54:40.698655 140263905666880 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:54:40.789927 140263905666880 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:54:40.993804 140263905666880 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:54:41.115249 140263905666880 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:54:41.300153 140263905666880 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:54:41.318425 140263905666880 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:54:41.373542 140263905666880 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+WARNING: Logging before flag parsing goes to stderr.
+W0403 13:54:41.409923 140263905666880 __init__.py:56] Some hub symbols are not available because TensorFlow version is less than 1.14
+[2019-04-03 13:55:57 +0000] [13878] [INFO] Worker exiting (pid: 13878)
+Using TensorFlow backend.
+[2019-04-03 13:55:57 +0000] [13880] [INFO] Worker exiting (pid: 13880)
+[2019-04-03 13:55:57 +0000] [13869] [INFO] Worker exiting (pid: 13869)
+Using TensorFlow backend.
+Using TensorFlow backend.
+[2019-04-03 13:55:57 +0000] [13881] [INFO] Worker exiting (pid: 13881)
+Using TensorFlow backend.
+Started: 17906563
+Downloading file 17906563.wav ... to /home/absin/git/sentenceSimilarity/speech/audio/tasks/
+Finished: 17906563
+Started: 17906563
+Downloading file 17906563.wav ... to /home/absin/git/sentenceSimilarity/speech/audio/tasks/
+Finished: 17906563
+[2019-04-03 13:55:57 +0000] [13886] [INFO] Worker exiting (pid: 13886)
+Using TensorFlow backend.
+[2019-04-03 13:55:57 +0000] [13877] [INFO] Worker exiting (pid: 13877)
+Using TensorFlow backend.
+[2019-04-03 13:55:57 +0000] [13866] [INFO] Worker exiting (pid: 13866)
+Using TensorFlow backend.
+[2019-04-03 13:55:57 +0000] [13850] [INFO] Handling signal: term
+[2019-04-03 13:56:27 +0000] [13850] [INFO] Shutting down: Master

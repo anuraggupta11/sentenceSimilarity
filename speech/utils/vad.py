@@ -21,7 +21,7 @@ def write_wave(path, frames, sample_rate):
     wav_file.setparams((nchannels, sampwidth, sample_rate, nframes, comptype, compname))
     wav_file.writeframes(b''.join(frames))
     wav_file.close()
-    print('Created chunk file at: '+path)
+    #print('Created chunk file at: '+path)
 """Reads a .wav file.
 
 Takes the path, and returns (PCM audio data, sample rate).
@@ -41,7 +41,7 @@ def read_wave(path):
 
 def perform_vad(file_path, chunk_folder_path, min_chunk_length = 2.5, max_chunk_length = 3.0):
     snippets = []
-    print('Processing '+ file_path+' for voice activity detection...')
+    #print('Processing '+ file_path+' for voice activity detection...')
     if os.path.isdir(chunk_folder_path) is False:
         print('Creating chunk folder at: '+chunk_folder_path)
         os.makedirs(chunk_folder_path)
@@ -73,7 +73,7 @@ def perform_vad(file_path, chunk_folder_path, min_chunk_length = 2.5, max_chunk_
                     chunk_file_path = chunk_folder_path+fileName+"_{:03}".format(chunk_count)+'.wav'
                     write_wave(chunk_file_path,accumulated_frames,sample_rate)
                     snippets.append(objects.Snippet(chunk_file_path, chunk_from, chunk_to))
-                    print('Creating chunk from: '+ str(chunk_from)  +'to: '+ str(chunk_to) +': '+ chunk_file_path)
+                    #print('Creating chunk from: '+ str(chunk_from)  +'to: '+ str(chunk_to) +': '+ chunk_file_path)
                     chunk_count = chunk_count + 1
                     accumulated_frames = []
                     chunk_from = chunk_to
@@ -83,7 +83,7 @@ def perform_vad(file_path, chunk_folder_path, min_chunk_length = 2.5, max_chunk_
                     chunk_file_path = chunk_folder_path+fileName+"_{:03}".format(chunk_count)+'.wav'
                     write_wave(chunk_file_path,accumulated_frames,sample_rate)
                     snippets.append(objects.Snippet(chunk_file_path, chunk_from, chunk_to))
-                    print('Creating chunk from: '+ str(chunk_from)  +'to: '+ str(chunk_to) +': '+ chunk_file_path)
+                    #print('Creating chunk from: '+ str(chunk_from)  +'to: '+ str(chunk_to) +': '+ chunk_file_path)
                     chunk_count = chunk_count + 1
                 accumulated_frames = []
                 chunk_from = chunk_to

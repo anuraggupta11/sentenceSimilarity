@@ -7,8 +7,9 @@ from speech.emotion import emotion_api
 import jsonpickle
 
 app = Flask(__name__)
-loaded_model = emotion_api.getModel()
-loaded_model._make_predict_function()
+loaded_model = ""
+#loaded_model = emotion_api.getModel()
+#loaded_model._make_predict_function()
 
 @app.route("/sentence_similarity", methods=['GET', 'POST'])
 def sentence_similarity():
@@ -21,7 +22,9 @@ def transcibe():
     task_id = request.args['task_id']
     language = request.args['language']
     model = (request.args['model'] == 'True')
+    print('Started: '+task_id)
     conversation_blocks = analysis_api.transcribe_emotion(task_id, language, model, loaded_model, False)
+    print('Finished: '+task_id)
     return jsonpickle.encode(conversation_blocks)
 
 @app.route("/transcibe_emotion", methods=['GET', 'POST'])
