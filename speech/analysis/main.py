@@ -13,6 +13,7 @@ import jsonpickle
 from emotion import emotion_api
 import requests
 import json
+import time
 
 def transcribe_emotion(task_id, language, model, loaded_model, do_emotion = True):
     r = requests.get("http://db.talentify.in:3050/product?method=SIGNAL&taskId="+task_id)
@@ -33,10 +34,11 @@ def transcribe_emotion(task_id, language, model, loaded_model, do_emotion = True
     for channel_file in channel_files:
         snippets.extend(vad.perform_vad(
             channel_file, task_folder + 'chunks/', min_chunk_length=1, max_chunk_length=50))
-
+    print('For task: '+task_id+', total chunks produced -->'+str(len(snippets)))
     conversation_blocks = []
 
     for snippet in snippets:
+        time.sleep(0.001)
         #print('Transcribing: ' + snippet.path)
         speaker = 'Customer'
         if task_id + '_1' in snippet.path:
