@@ -26,6 +26,7 @@ gunicorn --workers 5 -b 0.0.0.0:5010 wsgi:app
 # http://0.0.0.0:5010/transcibe_emotion?language=en-IN&model=False&task_id=17913211
 # http://0.0.0.0:5010/emotion?task_id=17908876
 # http://0.0.0.0:5010/emotion?task_id=17912106
+# http://35.244.16.25:5010/transcibe?task_id=17906563&language=en-IN&model=False
 
 # To smoothen deployment even more, create a service
 
@@ -33,18 +34,20 @@ vi /etc/systemd/system/sentenceSimilarity.service
 
 
 [Unit]
-Description=Gunicorn instance to serve myproject
+Description=Gunicorn instance to serve our python project
 After=network.target
 
 [Service]
 User=root
 Group=www-data
-WorkingDirectory=/root/deployment/sentenceSimilarity
-Environment="PATH=/root/deployment/venv/bin"
-ExecStart=/root/deployment/venv/bin/gunicorn --workers 5 -b 0.0.0.0:5010 wsgi:app
+WorkingDirectory=/root/sentenceSimilarity
+Environment="PATH=/root/sentenceSimilarity/venv/bin"
+Environment="GOOGLE_APPLICATION_CREDENTIALS=/root/nlptestproject-34c2ad35c9b2.json"
+ExecStart=/root/sentenceSimilarity/venv/bin/gunicorn --workers 8 --bind 0.0.0.0:5010 --timeout 1000 --error-logfile /root/sentenceSimilarity/err.out wsgi:app --capture-output --enable-stdio-inheritance
 
 [Install]
 WantedBy=multi-user.target
+
 
 
 systemctl start sentenceSimilarity.Service
