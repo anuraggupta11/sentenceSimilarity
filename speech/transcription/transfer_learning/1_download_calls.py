@@ -19,6 +19,7 @@ def download_file(url, folder):
 
 """Fetches all the calls made by ECC using sql connects with the system, takes the SQL host and password from the command line:"""
 def main():
+    downloaded_task_count = 0
     folder = "/home/absin/Documents/dev/sentenceSimilarity/speech/transcription/transfer_learning/calls/"
     if os.path.exists(folder):
         shutils.rmtree(folder)
@@ -43,6 +44,7 @@ def main():
         url = 'https://storage.googleapis.com/istar-static/' + file_name
         try:
             download_file(url, folder)
+            downloaded_task_count += 1
         except:
             print('Downloading failed for: '+file_name)
 

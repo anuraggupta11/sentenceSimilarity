@@ -5,9 +5,11 @@ from text import sentence_similarity as sentence_similarity_api
 from speech.analysis import main as analysis_api
 from speech.emotion import emotion_api
 import jsonpickle
+import redis
 
 app = Flask(__name__)
 loaded_model = ""
+pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
 #loaded_model = emotion_api.getModel()
 #loaded_model._make_predict_function()
 
@@ -23,7 +25,7 @@ def transcibe():
     language = request.args['language']
     model = (request.args['model'] == 'True')
     print('Started: '+task_id)
-    conversation_blocks = analysis_api.transcribe_emotion(task_id, language, model, loaded_model, False)
+    conversation_blocks = analysis_api.transcribe_emotion(task_id, language, model, loaded_model, pool, False)
     print('Finished: '+task_id)
     return jsonpickle.encode(conversation_blocks)
 
@@ -32,7 +34,7 @@ def transcibe_emotion():
     task_id = request.args['task_id']
     language = request.args['language']
     model = (request.args['model'] == 'True')
-    conversation_blocks = analysis_api.transcribe_emotion(task_id, language, model, loaded_model)
+    conversation_blocks = analysis_api.transcribe_emotion(task_id, language, model, loaded_model, pool)
     return jsonpickle.encode(conversation_blocks)
 
 @app.route("/emotion", methods=['GET', 'POST'])

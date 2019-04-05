@@ -56,3 +56,11 @@ systemctl stop sentenceSimilarity.Service
 
 # Some ffmpeg magic
 ffmpeg -i 17916689_002.wav -i 17916689_002.wav -filter_complex '[0:0][1:0]concat=n=2:v=0:a=1[out]' -map '[out]' output.wav
+
+# We are using Redis to ensure a rate check to the transcription engine
+# The redis only stores time at which every request is made.
+# The interface provides 2 methods:
+# Adding a new request with time at which its called to the redis
+# Checking how many requests have been made in the last minute
+sudo apt-get install redis-server
+pip3 install redis

@@ -20,6 +20,7 @@ class Snippet(object):
     def set_speaker(self, speaker):
         self.speaker = speaker
 
+
 class ConversationBlock(object):
     """Represents a conversation block specific to a speaker, the base of the analysis object"""
     def __init__(self, from_time, to_time, speaker, text, confidence):
@@ -43,6 +44,8 @@ class ConversationBlock(object):
     def add_words(self , words):
         self.words.extend(words)
 
+    def set_from_time(self, from_time):
+        self.from_time = from_time
 
 class Signal(object):
     """Represents the signals which can be textual or voice based like emotion"""

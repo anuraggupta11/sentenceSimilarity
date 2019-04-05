@@ -4,6 +4,7 @@ sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 from utils import vad
 from utils import misc
 from utils import objects
+from utils import redis_api
 import contextlib
 import shutil
 import wave
@@ -14,13 +15,22 @@ from emotion import emotion_api
 import requests
 import json
 import time
+import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor
+requests.adapters.DEFAULT_RETRIES = 50
 
-def transcribe_emotion(task_id, language, model, loaded_model, do_emotion = True):
-    r = requests.get("http://db.talentify.in:3050/product?method=SIGNAL&taskId="+task_id)
+def append_phrases(phrases, task_id):
+    r = requests.get("http://db.talentify.in:3050/product?method=SIGNAL&taskId="+task_id, timeout=1000)
     data = json.loads(r.content)
-    phrases=[]
     for item in data:
         phrases.append(item['value'])
+
+def transcribe_emotion(task_id, language, model, loaded_model, pool, do_emotion = True):
+    phrases=[]
+    try:
+        append_phrases(phrases, task_id)
+    except:
+        print('Fetching speech context failed for: '+task_id)
     task_folder = '/home/absin/git/sentenceSimilarity/speech/audio/tasks/'
     task_file_path = misc.download_file(
         'https://storage.googleapis.com/istar-static/'+task_id+'.wav', task_folder)
@@ -36,27 +46,32 @@ def transcribe_emotion(task_id, language, model, loaded_model, do_emotion = True
             channel_file, task_folder + 'chunks/', min_chunk_length=1, max_chunk_length=50))
     print('For task: '+task_id+', total chunks produced -->'+str(len(snippets)))
     conversation_blocks = []
+    transcription_futures = []
+    with ThreadPoolExecutor(max_workers=50) as executor:
+        for snippet in snippets:
+            #print('Transcribing: ' + snippet.path)
+            speaker = 'Customer'
+            if task_id + '_1' in snippet.path:
+                speaker = 'Agent'
+            rate_check_pass = False
+            while redis_api.check_entries(pool) > 200:
+                time.sleep(5)
+                print("Sleeping for 5 seconds while processing: "+task_id)
+            try:
+                transcription_futures.append(executor.submit(google_transcribe.transcribe_streaming, snippet, speaker, language, model, phrases))
+            except:
+                print('Failed for snippet: '+snippet.path)
+            redis_api.add_entry(pool)
 
-    for snippet in snippets:
-        time.sleep(0.001)
-        #print('Transcribing: ' + snippet.path)
-        speaker = 'Customer'
-        if task_id + '_1' in snippet.path:
-            speaker = 'Agent'
-        for response in google_transcribe.transcribe_streaming(snippet.path, language, model, phrases):
-            for result in response.results:
-                alternatives = result.alternatives
-                for alternative in alternatives:
-                    conversation_block = objects.ConversationBlock(snippet.from_time, snippet.to_time, speaker, alternative.transcript, alternative.confidence)
-                    for word_info in alternative.words:
-                        word = word_info.word
-                        start_time = word_info.start_time
-                        end_time = word_info.end_time
-                        word = objects.ConversationBlock(snippet.from_time + word_info.start_time.seconds + word_info.start_time.nanos * 1e-9,
-                            snippet.from_time + word_info.end_time.seconds + word_info.end_time.nanos * 1e-9, speaker, word, alternative.confidence)
-                        conversation_block.add_word(word)
-                conversation_blocks.append(conversation_block)
-        #break
+    for transcription_future in transcription_futures:
+        try:
+            convs = transcription_future.result(timeout=10)
+            conversation_blocks.extend(convs)
+        except Exception as exc:
+            print(exc)
+
+
+
     conversation_blocks.sort(key=lambda x: x.from_time, reverse=False)
 
     if do_emotion:
@@ -98,4 +113,3 @@ if __name__ == '__main__':
     task_id = '17906567'
     language = 'en-US'
     model = True
-    transcribe_emotion(task_id, language, model)
