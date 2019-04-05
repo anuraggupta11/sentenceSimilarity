@@ -2,7 +2,7 @@ import redis
 from datetime import datetime
 
 def add_entry(pool):
-    r = redis.Redis(host='localhost', port=6379, db=0)
+    r = redis.Redis(connection_pool=pool)
     key = datetime.now().strftime('%Y-%m-%d %H:%M')
     r.set(key, check_entries(pool) + 1)
 
