@@ -1,12 +1,13 @@
 from flask import Flask
 from flask import request
 from flask import jsonify
+from flask import send_from_directory
 from text import sentence_similarity as sentence_similarity_api
 from speech.analysis import main as analysis_api
 from speech.emotion import emotion_api
 import jsonpickle
 import redis
-
+from speech.transcription.transfer_learning import 4_chunk_data_api as chunk_api
 app = Flask(__name__)
 loaded_model = ""
 pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
@@ -43,5 +44,16 @@ def emotion():
     emotion_blocks = analysis_api.emotion(task_id, loaded_model)
     return jsonpickle.encode(emotion_blocks)
 
+@app.route("/chunks", methods=['GET', 'POST'])
+def chunks():
+    page = request.args['page']
+    host = request.args['host']
+    password = request.args['password']
+    chunks = chunk_api.fetch_chunks(page, host, password)
+    return jsonpickle.encode(chunks)
+
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path)
 if __name__ == '__main__':
     app.run(debug=True, threaded=True, host='0.0.0.0', port='5010')

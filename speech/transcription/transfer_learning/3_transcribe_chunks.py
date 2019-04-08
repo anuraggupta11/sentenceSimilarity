@@ -19,6 +19,7 @@ import time
 import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
 import re
+import psycopg2
 
 def clean_text(text):
     p = re.compile("[^a-z\\s']")
@@ -57,8 +58,8 @@ For every chunk entry in the db is checked, if found the transcription is also s
         try:
             convs = transcription_future[chunk_path].result(timeout=10)
             transcription = convs[0].text.replace("'","''")
-            sql = "INSERT INTO public.chunks ( abs_path, transcription, url, created_at, updated_at, file_size, is_verified) "+
-            "VALUES('"+chunk_path+"', '"+transcription+"', NULL, now(), now(), NULL, 'false');"
+            sql = "INSERT INTO public.chunks (file_name, abs_path, transcription, url, created_at, updated_at, file_size, is_verified) "+
+            "VALUES('"+chunk_path.split('/')[-1]+"', '"+chunk_path+"', '"+transcription+"', NULL, now(), now(), NULL, 'false');"
             try:
                 cur.execute(sql)
             except:

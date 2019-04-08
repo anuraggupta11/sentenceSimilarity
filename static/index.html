@@ -1,0 +1,36 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<div id="app-7">
+  <table>
+    <chunk-item
+      v-for="chunk in chunks"
+      v-bind:chunk="chunk"
+      v-bind:key="chunk.id">
+    </chunk-item>
+  </table>
+    <!--
+      Now we provide each todo-item with the todo object
+      it's representing, so that its content can be dynamic.
+      We also need to provide each component with a "key",
+      which will be explained later.
+    -->
+
+</div>
+
+<script type="text/javascript">
+  Vue.component('chunk-item', {
+  props: ['chunk'],
+  template: '<tr><td>{{ chunk.id }}</td><td contenteditable="true">{{ chunk.transcription }}</td><td></td><td><audio controls v-bind:src="chunk.url" type="audio/mpeg">Your browser does not support the audio element.</audio></td></tr>'
+})
+
+var app7 = new Vue({
+  el: '#app-7',
+  data: {
+    chunks: [
+      { id: 0, transcription: 'Vegetables', url:'https://storage.googleapis.com/istar-static/17897067.wav' },
+      { id: 1, transcription: 'Cheese', url:'https://storage.googleapis.com/istar-static/17897067.wav' },
+      { id: 2, transcription: 'Whatever else humans are supposed to eat' , url:'https://storage.googleapis.com/istar-static/17897067.wav' }
+    ]
+  }
+})
+</script>
