@@ -7,7 +7,7 @@ from speech.analysis import main as analysis_api
 from speech.emotion import emotion_api
 import jsonpickle
 import redis
-from speech.transcription.transfer_learning import 4_chunk_data_api as chunk_api
+from speech.transcription.transfer_learning import chunk_data_api as chunk_api
 app = Flask(__name__)
 loaded_model = ""
 pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
@@ -55,5 +55,10 @@ def chunks():
 @app.route('/static/<path:path>')
 def send_static(path):
     return send_from_directory('static', path)
+
+@app.route('/audio/<path:path>')
+def send_static_audio(path):
+    return send_from_directory('speech/transcription/transfer_learning/chunks', path)
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True, host='0.0.0.0', port='5010')

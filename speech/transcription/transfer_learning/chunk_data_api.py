@@ -1,6 +1,8 @@
 import psycopg2
+import time
 
 def fetch_chunks(page, host, password):
+    start = time.time()
     try:
         conn = psycopg2.connect("dbname='sales' user='postgres' host='"+host+"' password='"+password+"'")
     except:

@@ -1,5 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div id="app-7">
   <table>
     <chunk-item
@@ -31,6 +32,11 @@ var app7 = new Vue({
       { id: 1, transcription: 'Cheese', url:'https://storage.googleapis.com/istar-static/17897067.wav' },
       { id: 2, transcription: 'Whatever else humans are supposed to eat' , url:'https://storage.googleapis.com/istar-static/17897067.wav' }
     ]
+  },
+  mounted(){
+    var self = this;
+    var url = 'http://0.0.0.0:5010/chunks?page=0&password=cx6ac54nmgGtLD1y&host=db.talentify.in';
+    $.get(url).done(function(data){d = JSON.parse(data); console.log(d); self.chunks = d;});
   }
 })
 </script>

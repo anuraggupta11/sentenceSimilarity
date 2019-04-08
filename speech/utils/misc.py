@@ -22,6 +22,7 @@ def split_stereo(file_path, destination_folder = 'NA'):
     return [split_file_1, split_file_2]
 
 def download_file(url, folder):
+    success = False
     local_filename = url.split('/')[-1]
     if not os.path.exists(folder):
         os.makedirs(folder)
@@ -40,10 +41,19 @@ def download_file(url, folder):
                             # f.flush()
             break
         except:
-            print("Connection refused by the server..")
-            print("Let me sleep for 5 seconds")
-            print("ZZzzzz...")
+            print(" while downloading "+url+", Connection refused by the server.. gonna sleep for 5 seconds and then retry ZZzzzz...")
             time.sleep(5)
-            print("Was a nice sleep, now let me continue...")
             continue
-    return folder + local_filename
+    if os.path.exists(folder + local_filename):
+        print("Successfully downloaded "+local_filename + " from url: "+url+" to folder: "+folder)
+        success = True
+    else:
+        print("Failed to download "+local_filename + " from url: "+url+" to folder: "+folder)
+    return {"abs_path": folder + local_filename, "success": success}
+
+def reset_folders(folders):
+    for folder in folders:
+        if os.path.exists(folder):
+            print("Deleting folder and its contents: "+folder)
+            shutil.rmtree(folder)
+        os.makedirs(folder)
