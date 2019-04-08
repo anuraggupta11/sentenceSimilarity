@@ -55,8 +55,8 @@ def transcribe_emotion(task_id, language, model, loaded_model, pool, do_emotion 
                 speaker = 'Agent'
             rate_check_pass = False
             while redis_api.check_entries(pool) > 200:
-                time.sleep(5)
-                print("Sleeping for 5 seconds while processing: "+task_id)
+                time.sleep(61)
+                print("Sleeping for 61 seconds while processing: "+task_id)
             try:
                 transcription_futures.append(executor.submit(google_transcribe.transcribe_streaming, snippet, speaker, language, model, phrases))
             except:
