@@ -35,7 +35,7 @@ var app7 = new Vue({
   },
   mounted(){
     var self = this;
-    var url = 'http://0.0.0.0:5010/chunks?page=0&password=cx6ac54nmgGtLD1y&host=db.talentify.in';
+    var url = 'http://0.0.0.0:5010/chunks?page=0&password=password&host=db.talentify.in';
     $.get(url).done(function(data){d = JSON.parse(data); console.log(d); self.chunks = d;});
   }
 })
