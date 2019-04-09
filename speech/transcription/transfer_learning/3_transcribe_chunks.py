@@ -66,7 +66,8 @@ def main():
             else:
                 transcription = ''
             try:
-                sql = "INSERT INTO public.chunks (file_name, abs_path, transcription, url, created_at, updated_at, file_size, is_verified) "+"VALUES('"+chunk_path.split('/')[-1]+"', '"+chunk_folder_path+chunk_path+"', '"+transcription+"', NULL, now(), now(), NULL, 'false');"
+                file_size = os.stat(chunk_folder_path + chunk_path).st_size
+                sql = "INSERT INTO public.chunks (file_name, abs_path, transcription, url, created_at, updated_at, file_size, is_verified) "+"VALUES('"+chunk_path.split('/')[-1]+"', '"+chunk_folder_path+chunk_path+"', '"+transcription+"', NULL, now(), now(), "+file_size+", 'false');"
                 cur.execute(sql)
                 conn.commit()
             except:

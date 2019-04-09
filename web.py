@@ -52,6 +52,25 @@ def chunks():
     chunks = chunk_api.fetch_chunks(page, host, password)
     return jsonpickle.encode(chunks)
 
+@app.route("/verify_chunk", methods=['GET', 'POST'])
+def verify_chunk():
+    chunk_id = request.args['chunk_id']
+    host = request.args['host']
+    password = request.args['password']
+    is_verified = request.args['is_verified'].lower().startswith('t')
+    chunks = chunk_api.mark_chunk_as_verified(chunk_id, host, password, is_verified)
+    return jsonpickle.encode(chunks)
+
+@app.route("/update_chunk_transcription", methods=['GET', 'POST'])
+def update_chunk_transcription():
+    chunk_id = request.args['chunk_id']
+    host = request.args['host']
+    password = request.args['password']
+    transcript = request.args['transcript']
+    print("New: "+transcript)
+    chunks = chunk_api.update_chunk_transcription(chunk_id, host, password, transcript)
+    return jsonpickle.encode(chunks)
+
 @app.route('/static/<path:path>')
 def send_static(path):
     return send_from_directory('static', path)

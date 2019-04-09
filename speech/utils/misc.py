@@ -5,6 +5,7 @@ import requests
 import os
 requests.adapters.DEFAULT_RETRIES = 50
 import time
+from shutil import copy2
 
 def split_stereo(file_path, destination_folder = 'NA'):
     fs, data = wavfile.read(file_path)            # reading the file
@@ -57,3 +58,9 @@ def reset_folders(folders):
             print("Deleting folder and its contents: "+folder)
             shutil.rmtree(folder)
         os.makedirs(folder)
+
+def copy_files(file_path, destination_folder):
+    if not os.path.exists(file_path):
+        print('The file at path: '+file_path+' does not exist, please check')
+        return
+    copy2(file_path, destination_folder)

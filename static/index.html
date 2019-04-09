@@ -9,34 +9,79 @@
       v-bind:key="chunk.id">
     </chunk-item>
   </table>
-    <!--
-      Now we provide each todo-item with the todo object
-      it's representing, so that its content can be dynamic.
-      We also need to provide each component with a "key",
-      which will be explained later.
-    -->
-
 </div>
-
+<style media="screen">
+  td {
+    padding: 12px;
+    border: 1px solid black;
+    height: 50px;
+    vertical-align: bottom;
+  }
+  table {
+    width: 100%
+  }
+</style>
 <script type="text/javascript">
+  var password = 'cx6ac54nmgGtLD1y';
   Vue.component('chunk-item', {
   props: ['chunk'],
-  template: '<tr><td>{{ chunk.id }}</td><td contenteditable="true">{{ chunk.transcription }}</td><td></td><td><audio controls v-bind:src="chunk.url" type="audio/mpeg">Your browser does not support the audio element.</audio></td></tr>'
+  template: '<tr v-bind:id="chunk.id"><td>{{ chunk.id }}</td><td contenteditable="true" onblur="update_chunk_transcription()" >'
+  +'{{ chunk.transcription }}</td><td><label>Is Verified?</label><input type="checkbox" onchange="update_chunk_verification()" v-model="chunk.is_verified"></td><td><audio controls v-bind:src="chunk.url" type="audio/mpeg">'+
+      'Your browser does not support the audio element.</audio></td></tr>'
 })
 
 var app7 = new Vue({
   el: '#app-7',
   data: {
     chunks: [
-      { id: 0, transcription: 'Vegetables', url:'https://storage.googleapis.com/istar-static/17897067.wav' },
-      { id: 1, transcription: 'Cheese', url:'https://storage.googleapis.com/istar-static/17897067.wav' },
-      { id: 2, transcription: 'Whatever else humans are supposed to eat' , url:'https://storage.googleapis.com/istar-static/17897067.wav' }
+      { id: 0, transcription: 'Vegetables', url:'https://storage.googleapis.com/istar-static/17897067.wav', is_verified:true },
+      { id: 1, transcription: 'Cheese', url:'https://storage.googleapis.com/istar-static/17897067.wav', is_verified:true },
+      { id: 2, transcription: 'Whatever else humans are supposed to eat' , url:'https://storage.googleapis.com/istar-static/17897067.wav', is_verified:true }
     ]
   },
   mounted(){
     var self = this;
-    var url = 'http://0.0.0.0:5010/chunks?page=0&password=password&host=db.talentify.in';
-    $.get(url).done(function(data){d = JSON.parse(data); console.log(d); self.chunks = d;});
+    var url = 'http://0.0.0.0:5010/chunks?page=0&password='+password+'&host=db.talentify.in';
+    $.get(url).done(function(data){d = JSON.parse(data); self.chunks = d;});
   }
-})
+});
+
+update_chunk_transcription = function(){
+  var x = $(event.target);
+  var chunk_id = x.parent()[0].id;
+  var new_transcript = x.text();
+  var url = 'http://0.0.0.0:5010/update_chunk_transcription?password='+password+'&host=db.talentify.in&chunk_id='+chunk_id+'&transcript='+new_transcript;
+  if (window.confirm("Do you really want to update transcription?")) {
+    $.get(url).done(function(data){
+      var new_chunk = JSON.parse(data)[0];
+      for(var i = 0; i < app7.chunks.length; i++){
+        if(app7.chunks[i].id == chunk_id){
+          app7.chunks[i].transcription = new_chunk.transcription;
+          break;
+        }
+      }
+    });
+  } else {
+    return true;
+  }
+}
+update_chunk_verification = function(){
+  var x = $(event.target);
+  var chunk_id = $(x.parent()[0]).parent()[0].id;
+  var is_verified =  x[0].checked;
+  var url = 'http://0.0.0.0:5010/verify_chunk?password=cx6ac54nmgGtLD1y&host=db.talentify.in&chunk_id='+chunk_id+'&is_verified='+is_verified;
+  if (window.confirm("Do you really want to update verification?")) {
+    $.get(url).done(function(data){
+      var new_chunk = JSON.parse(data)[0];
+      for(var i = 0; i < app7.chunks.length; i++){
+        if(app7.chunks[i].id == chunk_id){
+          app7.chunks[i].is_verified = new_chunk.is_verified;
+          break;
+        }
+      }
+    });
+  } else {
+    return true;
+  }
+}
 </script>
