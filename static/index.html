@@ -22,7 +22,6 @@
   }
 </style>
 <script type="text/javascript">
-  var password = 'cx6ac54nmgGtLD1y';
   Vue.component('chunk-item', {
   props: ['chunk'],
   template: '<tr v-bind:id="chunk.id"><td>{{ chunk.id }}</td><td contenteditable="true" onblur="update_chunk_transcription()" >'
@@ -41,7 +40,7 @@ var app7 = new Vue({
   },
   mounted(){
     var self = this;
-    var url = 'http://0.0.0.0:5010/chunks?page=0&password='+password+'&host=db.talentify.in';
+    var url = 'http://0.0.0.0:5010/chunks?page=0';
     $.get(url).done(function(data){d = JSON.parse(data); self.chunks = d;});
   }
 });
@@ -50,7 +49,7 @@ update_chunk_transcription = function(){
   var x = $(event.target);
   var chunk_id = x.parent()[0].id;
   var new_transcript = x.text();
-  var url = 'http://0.0.0.0:5010/update_chunk_transcription?password='+password+'&host=db.talentify.in&chunk_id='+chunk_id+'&transcript='+new_transcript;
+  var url = 'http://0.0.0.0:5010/update_chunk_transcription?chunk_id='+chunk_id+'&transcript='+new_transcript;
   if (window.confirm("Do you really want to update transcription?")) {
     $.get(url).done(function(data){
       var new_chunk = JSON.parse(data)[0];
@@ -69,7 +68,7 @@ update_chunk_verification = function(){
   var x = $(event.target);
   var chunk_id = $(x.parent()[0]).parent()[0].id;
   var is_verified =  x[0].checked;
-  var url = 'http://0.0.0.0:5010/verify_chunk?password=cx6ac54nmgGtLD1y&host=db.talentify.in&chunk_id='+chunk_id+'&is_verified='+is_verified;
+  var url = 'http://0.0.0.0:5010/verify_chunk?chunk_id='+chunk_id+'&is_verified='+is_verified;
   if (window.confirm("Do you really want to update verification?")) {
     $.get(url).done(function(data){
       var new_chunk = JSON.parse(data)[0];

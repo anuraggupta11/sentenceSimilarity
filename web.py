@@ -47,28 +47,22 @@ def emotion():
 @app.route("/chunks", methods=['GET', 'POST'])
 def chunks():
     page = request.args['page']
-    host = request.args['host']
-    password = request.args['password']
-    chunks = chunk_api.fetch_chunks(page, host, password)
+    chunks = chunk_api.fetch_chunks(page)
     return jsonpickle.encode(chunks)
 
 @app.route("/verify_chunk", methods=['GET', 'POST'])
 def verify_chunk():
     chunk_id = request.args['chunk_id']
-    host = request.args['host']
-    password = request.args['password']
     is_verified = request.args['is_verified'].lower().startswith('t')
-    chunks = chunk_api.mark_chunk_as_verified(chunk_id, host, password, is_verified)
+    chunks = chunk_api.mark_chunk_as_verified(chunk_id, is_verified)
     return jsonpickle.encode(chunks)
 
 @app.route("/update_chunk_transcription", methods=['GET', 'POST'])
 def update_chunk_transcription():
     chunk_id = request.args['chunk_id']
-    host = request.args['host']
-    password = request.args['password']
     transcript = request.args['transcript']
     print("New: "+transcript)
-    chunks = chunk_api.update_chunk_transcription(chunk_id, host, password, transcript)
+    chunks = chunk_api.update_chunk_transcription(chunk_id, transcript)
     return jsonpickle.encode(chunks)
 
 @app.route('/static/<path:path>')

@@ -1,8 +1,14 @@
 import psycopg2
 import time
+import sys
+from os import path
+sys.path.append(path.dirname( path.dirname( path.dirname( path.dirname( path.abspath(__file__) ) ) )))
+from speech.utils import constants
 
-def fetch_chunks(page, host, password):
+def fetch_chunks(page):
     start = time.time()
+    host  = constants.fetch_contant('host')
+    password  = constants.fetch_contant('password')
     try:
         conn = psycopg2.connect("dbname='sales' user='postgres' host='"+host+"' password='"+password+"'")
     except:
@@ -21,8 +27,10 @@ def fetch_chunks(page, host, password):
         chunks.append(chunk)
     return chunks
 
-def fetch_chunk(chunk_id, host, password):
+def fetch_chunk(chunk_id):
     start = time.time()
+    host  = constants.fetch_contant('host')
+    password  = constants.fetch_contant('password')
     try:
         conn = psycopg2.connect("dbname='sales' user='postgres' host='"+host+"' password='"+password+"'")
     except:
@@ -41,8 +49,10 @@ def fetch_chunk(chunk_id, host, password):
         chunks.append(chunk)
     return chunks
 
-def mark_chunk_as_verified(chunk_id, host, password, is_verified):
+def mark_chunk_as_verified(chunk_id, is_verified):
     start = time.time()
+    host  = constants.fetch_contant('host')
+    password  = constants.fetch_contant('password')
     try:
         conn = psycopg2.connect("dbname='sales' user='postgres' host='"+host+"' password='"+password+"'")
     except:
@@ -59,8 +69,10 @@ def mark_chunk_as_verified(chunk_id, host, password, is_verified):
         print(e)
     return fetch_chunk(chunk_id, host, password)
 
-def update_chunk_transcription(chunk_id, host, password, transcript):
+def update_chunk_transcription(chunk_id, transcript):
     start = time.time()
+    host  = constants.fetch_contant('host')
+    password  = constants.fetch_contant('password')
     try:
         conn = psycopg2.connect("dbname='sales' user='postgres' host='"+host+"' password='"+password+"'")
     except:
