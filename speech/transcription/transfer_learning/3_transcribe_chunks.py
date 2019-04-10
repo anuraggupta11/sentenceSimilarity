@@ -40,11 +40,11 @@ def transcribe_and_db(chunk_folder_path, chunk_path, speaker, language, model, p
         transcription = ''
     try:
         file_size = os.stat(chunk_folder_path + chunk_path).st_size
-        sql = "INSERT INTO public.chunks (file_name, abs_path, transcription, url, created_at, updated_at, file_size, is_verified) "+"VALUES('"+chunk_path.split('/')[-1]+"', '"+chunk_folder_path+chunk_path+"', '"+transcription+"', NULL, now(), now(), "+file_size+", 'false');"
+        sql = "INSERT INTO public.chunks (file_name, abs_path, transcription, url, created_at, updated_at, file_size, is_verified) "+"VALUES('"+chunk_path.split('/')[-1]+"', '"+chunk_folder_path+chunk_path+"', '"+transcription+"', NULL, now(), now(), "+file_size+", false);"
         cur.execute(sql)
         conn.commit()
-    except:
-        print("Query fetch failed")
+    except Exception as e:
+        print(e)
 
 def main():
     """ Performs transcription of all the chunks and stores the results in a database.
@@ -58,7 +58,7 @@ def main():
     except Exception as e:
         print('Fetching speech context failed because: ')
         print(e)
-    print("The hints for the transcriotion will be as follows: ")
+    print("The hints for the transcription will be as follows: ")
     print(phrases)
     host = input("Enter DB host: ")
     password = input("Enter DB password: ")
