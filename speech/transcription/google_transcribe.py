@@ -5,10 +5,12 @@ sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 from utils import vad
 from utils import misc
 from utils import objects
-
+import time
 
 # [START speech_transcribe_streaming]
 def transcribe_streaming(snippet, speaker, language, model, phrases):
+    start = time.time()
+    print('Started transcription of file: '+str(snippet.path))
     """Streams transcription of the given audio file."""
     from google.cloud import speech
     from google.cloud.speech import enums
@@ -72,6 +74,7 @@ def transcribe_streaming(snippet, speaker, language, model, phrases):
                     print('For snippet: '+snippet.path + ' multiple conversation blocks received')
                     conversation_block.set_from_time(snippet.from_time + delta)
             conversation_blocks.append(conversation_block)
+    print('Finished transcription of: '+str(snippet.path)+' after: '+str((time.time())-start))
     return conversation_blocks
     # [END speech_python_migration_streaming_response]
 # [END speech_transcribe_streaming]

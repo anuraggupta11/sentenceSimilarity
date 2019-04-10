@@ -6,7 +6,7 @@ sudo apt-get install build-essential
 sudo apt-get install virtualenv
 virtualenv -p python3.6 venv
 source venv/bin/activate
-pip3 install Flask tensorflow tensorflow-hub keras numpy librosa webrtcvad requests jsonpickle pandas
+pip3 install Flask tensorflow tensorflow-hub keras numpy librosa webrtcvad requests jsonpickle pandas requests
 pip3 install --upgrade google-cloud-speech
 # For the google speech to text api to work
 echo $GOOGLE_APPLICATION_CREDENTIALS
@@ -64,3 +64,19 @@ ffmpeg -i 17916689_002.wav -i 17916689_002.wav -filter_complex '[0:0][1:0]concat
 # Checking how many requests have been made in the last minute
 sudo apt-get install redis-server
 pip3 install redis
+pip3 install psycopg2-binary
+drop
+	table
+		chunks;
+
+create
+	table
+		chunks ( id serial primary key,
+		file_name varchar,
+		abs_path varchar,
+		transcription varchar,
+		url varchar,
+		created_at timestamp,
+		updated_at timestamp,
+		file_size int,
+		is_verified boolean )
