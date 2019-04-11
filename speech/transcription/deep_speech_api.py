@@ -4,6 +4,13 @@ from deepspeech import Model, printVersions
 import time
 import wave
 import numpy as np
+import shlex
+import subprocess
+try:
+    from shhlex import quote
+except ImportError:
+    from pipes import quote
+
 
 import sys
 from os import path
@@ -46,7 +53,7 @@ def main(use_lm, audio_path):
     if use_lm:
         lm_path = constants.fetch_contant('deepspeech', 'lm_path')
         trie_path = constants.fetch_contant('deepspeech', 'trie_path')
-        print('Loading language model from files {} {}'.format(args.lm, args.trie), file=sys.stderr)
+        print('Loading language model from files {} {}'.format(lm_path, trie_path), file=sys.stderr)
         ds.enableDecoderWithLM(alphabet_path, lm_path, trie_path, LM_ALPHA, LM_BETA)
         print('Loaded language model after: '+str((time.time())-start), file=sys.stderr)
     fin = wave.open(audio_path, 'rb')
