@@ -9,10 +9,8 @@ import jsonpickle
 import redis
 from speech.transcription.transfer_learning import chunk_data_api as chunk_api
 app = Flask(__name__)
-loaded_model = ""
+loaded_model = None
 pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
-#loaded_model = emotion_api.getModel()
-#loaded_model._make_predict_function()
 
 @app.route("/sentence_similarity", methods=['GET', 'POST'])
 def sentence_similarity():
@@ -25,8 +23,11 @@ def transcibe():
     task_id = request.args['task_id']
     language = request.args['language']
     model = (request.args['model'] == 'True')
+    engine = request.args['engine']
+    if engine is None:
+        engine = 'google'
     print('Started: '+task_id)
-    conversation_blocks = analysis_api.transcribe_emotion(task_id, language, model, loaded_model, pool, False)
+    conversation_blocks = analysis_api.transcribe_emotion(engine, task_id, language, model, loaded_model, pool, False)
     print('Finished: '+task_id)
     return jsonpickle.encode(conversation_blocks)
 
@@ -35,12 +36,19 @@ def transcibe_emotion():
     task_id = request.args['task_id']
     language = request.args['language']
     model = (request.args['model'] == 'True')
-    conversation_blocks = analysis_api.transcribe_emotion(task_id, language, model, loaded_model, pool)
+    engine = request.args['engine']
+    if engine is None:
+        engine = 'google'
+    conversation_blocks = analysis_api.transcribe_emotion(engine, task_id, language, model, loaded_model, pool)
     return jsonpickle.encode(conversation_blocks)
 
 @app.route("/emotion", methods=['GET', 'POST'])
 def emotion():
     task_id = request.args['task_id']
+    global loaded_model
+    if loaded_model is None:
+        loaded_model = emotion_api.getModel()
+        loaded_model._make_predict_function()
     emotion_blocks = analysis_api.emotion(task_id, loaded_model)
     return jsonpickle.encode(emotion_blocks)
 

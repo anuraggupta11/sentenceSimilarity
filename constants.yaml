@@ -2,3 +2,9 @@ chunk_folder_path: /home/absin/Documents/dev/sentenceSimilarity/speech/transcrip
 host: db.talentify.in
 password: cx6ac54nmgGtLD1y
 stereo_folder: /home/absin/Documents/dev/sentenceSimilarity/speech/transcription/transfer_learning/calls_dual/
+
+deepspeech:
+  model_path: /path/to/.pbmm
+  alphabet_path: /path/to/alphabet.txt
+  lm_path: /path/to/ken.lm
+  trie_path: /path/to/trie

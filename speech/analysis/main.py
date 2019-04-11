@@ -9,6 +9,7 @@ import contextlib
 import shutil
 import wave
 from transcription import google_transcribe
+from transcription import deep_speech_api
 import pdb
 import jsonpickle
 from emotion import emotion_api
@@ -25,7 +26,7 @@ def append_phrases(phrases, task_id):
     for item in data:
         phrases.append(item['value'])
 
-def transcribe_emotion(task_id, language, model, loaded_model, pool, do_emotion = True):
+def transcribe_emotion(engine, task_id, language, model, loaded_model, pool, do_emotion = True):
     phrases=[]
     try:
         append_phrases(phrases, task_id)
@@ -46,33 +47,41 @@ def transcribe_emotion(task_id, language, model, loaded_model, pool, do_emotion 
             channel_file, task_folder + 'chunks/', min_chunk_length=1, max_chunk_length=50))
     print('For task: '+task_id+', total chunks produced -->'+str(len(snippets)))
     conversation_blocks = []
-    transcription_futures = []
-    with ThreadPoolExecutor(max_workers=50) as executor:
+
+    if engine == 'google':
+        transcription_futures = []
+        with ThreadPoolExecutor(max_workers=50) as executor:
+            for snippet in snippets:
+                #print('Transcribing: ' + snippet.path)
+                speaker = 'Customer'
+                if task_id + '_1' in snippet.path:
+                    speaker = 'Agent'
+                rate_check_pass = False
+                while redis_api.check_entries(pool) > 200:
+                    time.sleep(61)
+                    print("Sleeping for 61 seconds while processing: "+task_id)
+                try:
+                    transcription_futures.append(executor.submit(google_transcribe.transcribe_streaming, snippet, speaker, language, model, phrases))
+                except:
+                    print('Failed for snippet: '+snippet.path)
+                redis_api.add_entry(pool)
+        for transcription_future in transcription_futures:
+            try:
+                convs = transcription_future.result(timeout=10)
+                conversation_blocks.extend(convs)
+            except Exception as exc:
+                print(exc)
+        conversation_blocks.sort(key=lambda x: x.from_time, reverse=False)
+
+    elif engine == 'deepspeech':
         for snippet in snippets:
-            #print('Transcribing: ' + snippet.path)
             speaker = 'Customer'
             if task_id + '_1' in snippet.path:
                 speaker = 'Agent'
-            rate_check_pass = False
-            while redis_api.check_entries(pool) > 200:
-                time.sleep(61)
-                print("Sleeping for 61 seconds while processing: "+task_id)
-            try:
-                transcription_futures.append(executor.submit(google_transcribe.transcribe_streaming, snippet, speaker, language, model, phrases))
-            except:
-                print('Failed for snippet: '+snippet.path)
-            redis_api.add_entry(pool)
-
-    for transcription_future in transcription_futures:
-        try:
-            convs = transcription_future.result(timeout=10)
-            conversation_blocks.extend(convs)
-        except Exception as exc:
-            print(exc)
-
-
-
-    conversation_blocks.sort(key=lambda x: x.from_time, reverse=False)
+            transcript = deep_speech_api.main(True, snippet.path)
+            conversation_block = objects.ConversationBlock(snippet.from_time , snippet.to_time, speaker, transcript, 1)
+            conversation_blocks.append(conversation_block)
+        conversation_blocks.sort(key=lambda x: x.from_time, reverse=False)
 
     if do_emotion:
         # Now the emotional bit

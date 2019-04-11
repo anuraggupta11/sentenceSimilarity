@@ -8,6 +8,9 @@ virtualenv -p python3.6 venv
 source venv/bin/activate
 pip3 install Flask tensorflow tensorflow-hub keras numpy librosa webrtcvad requests jsonpickle pandas requests
 pip3 install --upgrade google-cloud-speech
+pip3 install redis
+pip3 install psycopg2-binary
+pip3 install deepspeech
 # For the google speech to text api to work
 echo $GOOGLE_APPLICATION_CREDENTIALS
 # should show the path of the json file
@@ -63,8 +66,7 @@ ffmpeg -i 17916689_002.wav -i 17916689_002.wav -filter_complex '[0:0][1:0]concat
 # Adding a new request with time at which its called to the redis
 # Checking how many requests have been made in the last minute
 sudo apt-get install redis-server
-pip3 install redis
-pip3 install psycopg2-binary
+
 drop
 	table
 		chunks;
@@ -79,4 +81,4 @@ create
 		created_at timestamp,
 		updated_at timestamp,
 		file_size int,
-		is_verified boolean )
+		is_verified boolean );
