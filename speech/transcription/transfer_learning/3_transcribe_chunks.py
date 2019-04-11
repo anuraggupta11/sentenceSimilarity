@@ -35,6 +35,10 @@ def transcribe_and_db(chunk_folder_path, chunk_path, speaker, language, model, p
     if len(rows)>0:
         print('Skipping: '+chunk_path+', already done')
         return
+    while redis_api.check_entries(pool) > 100:
+        time.sleep(61)
+        print("Sleeping for 61 seconds while processing: "+chunk_path)
+    redis_api.add_entry(pool)
     snippet = objects.Snippet(chunk_folder_path + chunk_path, 0, 0)
     try:
         convs = google_transcribe.transcribe_streaming(snippet, speaker, language, model, phrases)
@@ -79,11 +83,6 @@ def main():
     # Check the install.sh for the table schema
     with ThreadPoolExecutor(max_workers=50) as executor:
         for chunk_path in chunk_paths:
-            rate_check_pass = False
-            while redis_api.check_entries(pool) > 100:
-                time.sleep(61)
-                print("Sleeping for 61 seconds while processing: "+chunk_path)
-            redis_api.add_entry(pool)
             try:
                 transcription_futures.append(executor.submit(transcribe_and_db,chunk_folder_path, chunk_path, "Agent", "en-US", True, phrases, conn, cur))
             except:
