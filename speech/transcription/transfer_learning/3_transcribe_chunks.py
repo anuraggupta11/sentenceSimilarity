@@ -28,7 +28,13 @@ def clean_text(text):
     return p.sub(' ', text)
 
 def transcribe_and_db(chunk_folder_path, chunk_path, speaker, language, model, phrases, conn, cur):
+    check_if_already_done_sql = "select * from chunks where file_name = '"+chunk_path.split('/')[-1]+"'"
+    cur.execute(check_if_already_done_sql)
+    rows = cur.fetchall()
     convs = []
+    if len(rows)>0:
+        print('Skipping: '+chunk_path+', already done')
+        return
     snippet = objects.Snippet(chunk_folder_path + chunk_path, 0, 0)
     try:
         convs = google_transcribe.transcribe_streaming(snippet, speaker, language, model, phrases)
@@ -40,7 +46,7 @@ def transcribe_and_db(chunk_folder_path, chunk_path, speaker, language, model, p
         transcription = ''
     try:
         file_size = os.stat(chunk_folder_path + chunk_path).st_size
-        sql = "INSERT INTO public.chunks (file_name, abs_path, transcription, url, created_at, updated_at, file_size, is_verified) "+"VALUES('"+chunk_path.split('/')[-1]+"', '"+chunk_folder_path+chunk_path+"', '"+transcription+"', NULL, now(), now(), "+file_size+", false);"
+        sql = "INSERT INTO public.chunks (file_name, abs_path, transcription, url, created_at, updated_at, file_size, is_verified) "+"VALUES('"+chunk_path.split('/')[-1]+"', '"+chunk_folder_path+chunk_path+"', '"+transcription+"', NULL, now(), now(), "+str(file_size)+", false);"
         cur.execute(sql)
         conn.commit()
     except Exception as e:
