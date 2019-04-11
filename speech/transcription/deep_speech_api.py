@@ -35,7 +35,7 @@ def convert_samplerate(audio_path):
         raise OSError(e.errno, 'SoX not found, use 16kHz files or install it: {}'.format(e.strerror))
     return 16000, np.frombuffer(output, np.int16)
 
-main(use_lm, audio_path):
+def main(use_lm, audio_path):
     start = time.time()
     conversation_blocks = []
     model_path = constants.fetch_contant('deepspeech', 'model_path')

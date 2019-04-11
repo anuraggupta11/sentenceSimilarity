@@ -105,7 +105,7 @@ def transcribe_emotion(engine, task_id, language, model, loaded_model, pool, do_
 def emotion(task_id, loaded_model):
     task_folder = '/home/absin/git/sentenceSimilarity/speech/audio/tasks/'
     task_file_path = misc.download_file(
-        'https://storage.googleapis.com/istar-static/'+task_id+'.wav', task_folder)
+        'https://storage.googleapis.com/istar-static/'+task_id+'.wav', task_folder)['abs_path']
     channel_files = [task_file_path]
     # split multichannel to 2 files
     with contextlib.closing(wave.open(task_file_path, 'rb')) as wf:
