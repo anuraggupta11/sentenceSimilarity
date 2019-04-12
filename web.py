@@ -8,15 +8,29 @@ from speech.emotion import emotion_api
 import jsonpickle
 import redis
 from speech.transcription.transfer_learning import chunk_data_api as chunk_api
+import tensorflow as tf
+import tensorflow_hub as hub
+
 app = Flask(__name__)
 loaded_model = None
 pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
+embed = g = session = messages = output = None
 
 @app.route("/sentence_similarity", methods=['GET', 'POST'])
 def sentence_similarity():
+    global embed,g,session,messages,output
+    if g == None:
+        module_url = "https://tfhub.dev/google/universal-sentence-encoder-large/3"
+        embed = hub.Module(module_url)
+        g = tf.get_default_graph()
+        session = tf.Session(graph=g)
+        session.run([tf.global_variables_initializer(), tf.tables_initializer()])
+        messages = tf.placeholder(dtype=tf.string, shape=[None])
+        output = embed(messages)
+        print('Successfully initialized sentence similarity variables')
     sentence1 = request.form['sentence1']
     sentence2 = request.form['sentence2']
-    return jsonify(sentence1=sentence1, sentence2=sentence2, similarityScore=str(sentence_similarity_api.ss(sentence1, sentence2)))
+    return sentence_similarity_api.fast_sentence_similarity(sentence1, sentence2, g, output, session, messages)
 
 @app.route("/transcibe", methods=['GET', 'POST'])
 def transcibe():
