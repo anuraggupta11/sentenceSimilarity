@@ -15,7 +15,7 @@ def fetch_chunks(page):
         print('Establishing connection with db failed')
     print("Connection established successsfully after: "+str(time.time()-start))
     cur = conn.cursor()
-    sql = 'select * from chunks order by id desc limit 100 offset ' + str(int(page)*100)
+    sql = 'select * from chunks order by id desc limit 100 offset ' + str(int(page)*100 + ' where is_verified != true and is_seen = false')
     try:
         cur.execute(sql)
     except:
@@ -59,9 +59,9 @@ def mark_chunk_as_verified(chunk_id, is_verified):
         print('Establishing connection with db failed')
     print("Connection established successsfully after: "+str(time.time()-start))
     cur = conn.cursor()
-    sql = 'update chunks set is_verified = true, updated_at = now() where id = '+str(chunk_id)
+    sql = 'update chunks set is_verified = true, is_seen = true, updated_at = now() where id = '+str(chunk_id)
     if not is_verified:
-        sql = 'update chunks set is_verified = false, updated_at = now() where id = '+str(chunk_id)
+        sql = 'update chunks set is_verified = false, is_seen = true, updated_at = now() where id = '+str(chunk_id)
     try:
         cur.execute(sql)
         conn.commit()

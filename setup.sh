@@ -43,6 +43,7 @@ User=root
 Group=www-data
 WorkingDirectory=/root/sentenceSimilarity
 Environment="PATH=/root/sentenceSimilarity/venv/bin"
+Environment="PATH=/usr/bin:$PATH"
 Environment="GOOGLE_APPLICATION_CREDENTIALS=/root/nlptestproject-34c2ad35c9b2.json"
 ExecStart=/root/sentenceSimilarity/venv/bin/gunicorn --workers 8 --bind 0.0.0.0:5010 --timeout 1000 --error-logfile /root/sentenceSimilarity/err.out wsgi:app --capture-output --enable-stdio-inheritance
 
@@ -80,3 +81,4 @@ create
 		updated_at timestamp,
 		file_size int,
 		is_verified boolean );
+alter table chunks add column is_seen boolean;
