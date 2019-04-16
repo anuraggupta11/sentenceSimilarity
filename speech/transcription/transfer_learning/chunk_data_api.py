@@ -7,8 +7,8 @@ from speech.utils import constants
 
 def fetch_chunks(page):
     start = time.time()
-    host  = constants.fetch_contant('host')
-    password  = constants.fetch_contant('password')
+    host  = constants.fetch_contant_single('host')
+    password  = constants.fetch_contant_single('password')
     try:
         conn = psycopg2.connect("dbname='sales' user='postgres' host='"+host+"' password='"+password+"'")
     except:
@@ -29,8 +29,8 @@ def fetch_chunks(page):
 
 def fetch_chunk(chunk_id):
     start = time.time()
-    host  = constants.fetch_contant('host')
-    password  = constants.fetch_contant('password')
+    host  = constants.fetch_contant_single('host')
+    password  = constants.fetch_contant_single('password')
     try:
         conn = psycopg2.connect("dbname='sales' user='postgres' host='"+host+"' password='"+password+"'")
     except:
@@ -51,8 +51,8 @@ def fetch_chunk(chunk_id):
 
 def mark_chunk_as_verified(chunk_id, is_verified):
     start = time.time()
-    host  = constants.fetch_contant('host')
-    password  = constants.fetch_contant('password')
+    host  = constants.fetch_contant_single('host')
+    password  = constants.fetch_contant_single('password')
     try:
         conn = psycopg2.connect("dbname='sales' user='postgres' host='"+host+"' password='"+password+"'")
     except:
@@ -67,12 +67,12 @@ def mark_chunk_as_verified(chunk_id, is_verified):
         conn.commit()
     except Exception as e:
         print(e)
-    return fetch_chunk(chunk_id, host, password)
+    return fetch_chunk(chunk_id)
 
 def update_chunk_transcription(chunk_id, transcript):
     start = time.time()
-    host  = constants.fetch_contant('host')
-    password  = constants.fetch_contant('password')
+    host  = constants.fetch_contant_single('host')
+    password  = constants.fetch_contant_single('password')
     try:
         conn = psycopg2.connect("dbname='sales' user='postgres' host='"+host+"' password='"+password+"'")
     except:
@@ -85,4 +85,4 @@ def update_chunk_transcription(chunk_id, transcript):
         conn.commit()
     except:
         print("Query fetch failed")
-    return fetch_chunk(chunk_id, host, password)
+    return fetch_chunk(chunk_id)

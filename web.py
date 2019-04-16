@@ -93,7 +93,7 @@ def send_static(path):
 
 @app.route('/audio/<path:path>')
 def send_static_audio(path):
-    return send_from_directory('speech/transcription/transfer_learning/chunks', path)
+    return send_from_directory('/home/absin/Documents/dev/sentenceSimilarity/speech/transcription/transfer_learning/chunks', path)
 
 if __name__ == '__main__':
     app.run(debug=True, threaded=True, host='0.0.0.0', port='5010')
